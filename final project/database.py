@@ -14,7 +14,7 @@ def setup_database():
             title TEXT NOT NULL,
             author TEXT NOT NULL,
             subject TEXT,
-            serial_number TEXT UNIQUE,
+            serial_number TEXT NOT NULL,
             type TEXT NOT NULL,
             status TEXT NOT NULL DEFAULT 'available'
         );
@@ -40,6 +40,9 @@ def setup_database():
     """)
     conn.commit()
     conn.close()
+    
+#FUNCTION : 
+
 
 def add_material(title, author, subject, serial_number, type):
     conn = create_connection()
@@ -61,7 +64,6 @@ def add_user(name, email):
     conn.commit()
     conn.close()
 
-#FUNCTION : 
 
 def checkout_item(user_id, material_id, days=14):
     due_date = datetime.now() + timedelta(days=days)

@@ -13,7 +13,18 @@ def main():
 
     # Sample data for demonstration
     add_material("The Great Gatsby", "F. Scott Fitzgerald", "American Literature", "SN12345", "book")
+    add_material("To Kill a Mockingbird", "Harper Lee", "American Literature", "SN67890", "book")
+    add_material("1984", "George Orwell", "Dystopian Fiction", "SN11223", "book")
+    add_material("Pride and Prejudice", "Jane Austen", "British Literature", "SN22434", "book")
+    add_material("The Catcher in the Rye", "J.D. Salinger", "American Literature", "SN33545", "book")
+    add_material("The Hobbit", "J.R.R. Tolkien", "Fantasy", "SN44656", "book")      
+    
     add_user("John Doe", "johndoe@example.com")
+    add_user("Alice Johnson", "alicejohnson@example.com")
+    add_user("Bob Smith", "bobsmith@example.com")
+    add_user("Carol White", "carolwhite@example.com")
+    add_user("Dave Brown", "davebrown@example.com") 
+    add_user("Eve Davis", "evedavis@example.com")
 
     while True:
         print_menu()
