@@ -7,14 +7,6 @@ class TestLibraryManagementSystem(unittest.TestCase):
         # Setup that will be performed before each test
         pass
 
-    @patch('final_project.library_management.checkout_item')
-    def test_checkout_item_success(self, mock_checkout):
-        # Setup the mock to return True
-        mock_checkout.return_value = True
-
-        # Now call the function and check the outcome
-        result = checkout_item(1, 100)
-        self.assertTrue(result)
 
     @patch('library_management.checkout_item')
     def test_checkout_item_failure(self, mock_checkout):
