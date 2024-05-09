@@ -7,7 +7,6 @@ class TestLibraryManagementSystem(unittest.TestCase):
         # Setup that will be performed before each test
         pass
 
-
     @patch('library_management.checkout_item')
     def test_checkout_item_failure(self, mock_checkout):
         # Test failed checkout

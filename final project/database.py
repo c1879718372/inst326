@@ -2,49 +2,33 @@ import sqlite3
 from datetime import datetime, timedelta
 
 def create_connection():
+    # Establishes and returns a connection to the SQLite database named 'library.db'.
     conn = sqlite3.connect('library.db')
     return conn
 
 def setup_database():
+    # Sets up the database by creating tables for materials, users, and transactions if they don't already exist.
     conn = create_connection()
     cursor = conn.cursor()
+    # Create a table for library materials with attributes like title, author, etc.
+    # 'status' defaults to 'available' indicating the item can be borrowed.
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS materials (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT NOT NULL,
-            author TEXT NOT NULL,
-            subject TEXT,
-            serial_number TEXT NOT NULL,
-            type TEXT NOT NULL,
-            status TEXT NOT NULL DEFAULT 'available'
-        );
+        CREATE TABLE IF NOT EXISTS materials (...)
     """)
+    # Create a table for users with unique email.
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            email TEXT UNIQUE
-        );
+        CREATE TABLE IF NOT EXISTS users (...)
     """)
+    # Create a table for transactions to track borrowed materials.
+    # Establishes foreign key relationships with users and materials tables.
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS transactions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_id INTEGER,
-            material_id INTEGER,
-            issue_date TEXT,
-            due_date TEXT,
-            return_date TEXT,
-            FOREIGN KEY (user_id) REFERENCES users(id),
-            FOREIGN KEY (material_id) REFERENCES materials(id)
-        );
+        CREATE TABLE IF NOT EXISTS transactions (...)
     """)
     conn.commit()
     conn.close()
-    
-#FUNCTION : 
-
 
 def add_material(title, author, subject, serial_number, type):
+    # Adds a new material to the materials table using the provided parameters.
     conn = create_connection()
     cursor = conn.cursor()
     cursor.execute("""
@@ -55,6 +39,7 @@ def add_material(title, author, subject, serial_number, type):
     conn.close()
 
 def add_user(name, email):
+    # Adds a new user to the users table using the provided name and email.
     conn = create_connection()
     cursor = conn.cursor()
     cursor.execute("""
@@ -64,11 +49,12 @@ def add_user(name, email):
     conn.commit()
     conn.close()
 
-
 def checkout_item(user_id, material_id, days=14):
+    # Checks out an item to a user, setting the due date for return, and updates the material's status.
     due_date = datetime.now() + timedelta(days=days)
     conn = create_connection()
     cursor = conn.cursor()
+    # Only update status if the item is available.
     cursor.execute("""
         UPDATE materials SET status='checked out' WHERE id=? AND status='available';
     """, (material_id,))
@@ -85,6 +71,7 @@ def checkout_item(user_id, material_id, days=14):
         return False
 
 def return_item(material_id):
+    # Marks an item as returned in the transactions table and updates its status in the materials table.
     conn = create_connection()
     cursor = conn.cursor()
     cursor.execute("""
@@ -97,6 +84,7 @@ def return_item(material_id):
     conn.close()
 
 def search_materials(keyword):
+    # Searches for materials that match the keyword in title, author, subject, or serial number.
     conn = create_connection()
     cursor = conn.cursor()
     cursor.execute("""
@@ -107,6 +95,7 @@ def search_materials(keyword):
     return items
 
 def list_overdue_items():
+    # Lists all items that are overdue based on the current date.
     conn = create_connection()
     cursor = conn.cursor()
     cursor.execute("""

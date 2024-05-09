@@ -62,7 +62,7 @@ class TestDatabase(unittest.TestCase):
         user_id, material_id, days = 1, 1, 14
         database.checkout_item(user_id, material_id, days)
 
-        # Check if execute was called at least once (this is a simplification)
+        # Check if execute was called at least once
         mock_cursor.execute.assert_called()
         # Ensure the connection is committed and closed
         mock_conn.commit.assert_called_once()
