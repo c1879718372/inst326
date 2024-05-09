@@ -1,5 +1,7 @@
 from database import setup_database, add_material, add_user, checkout_item, return_item, search_materials, list_overdue_items
 
+## RUN database.py first
+
 def print_menu():
     print("\nLibrary Management System Menu:")
     print("1 - Checkout an item")
